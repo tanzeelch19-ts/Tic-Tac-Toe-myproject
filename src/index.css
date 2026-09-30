@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (light) ---------- */
+:root {
+  --paper: #E8EDF6;
+  --grid:  #D3DBE9;
+  --ink:   #14203D;
+  --edge:  #14203D;   /* outlines + the "key edge" under tiles and buttons */
+  --muted: #5B6784;
+  --panel: #F8FAFE;
+  --tile:  #FFFFFF;
+  --x:     #2F54EB;
+  --o:     #E8365F;
+  --on-accent: #FFFFFF;
+
+  color-scheme: light dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark: follows the OS, unless <html data-theme="light"> forces light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1424; --grid: #182036; --ink: #E8ECF8; --edge: #46557F;
+    --muted: #93A0BC; --panel: #161E33; --tile: #1D2740;
+    --x: #7E97FF; --o: #FF7A98; --on-accent: #0E1424;
+  }
+}
+/* ...or <html data-theme="dark"> forces dark (set by ThemeToggle) */
+:root[data-theme="dark"] {
+  --paper: #0E1424; --grid: #182036; --ink: #E8ECF8; --edge: #46557F;
+  --muted: #93A0BC; --panel: #161E33; --tile: #1D2740;
+  --x: #7E97FF; --o: #FF7A98; --on-accent: #0E1424;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+/* ---------- Tailwind theme ---------- */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-grid: var(--grid);
+  --color-ink: var(--ink);
+  --color-edge: var(--edge);
+  --color-muted: var(--muted);
+  --color-panel: var(--panel);
+  --color-tile: var(--tile);
+  --color-x: var(--x);
+  --color-o: var(--o);
+  --color-on-accent: var(--on-accent);
+}
+
+@theme {
+  --font-display: 'Unbounded', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --animate-ink: ink .34s cubic-bezier(.3, .6, .3, 1) both;   /* mark drawn in */
+  --animate-pop: pop .3s cubic-bezier(.3, .9, .3, 1.2) both;  /* mark lands / status changes */
+  --animate-win: win .55s cubic-bezier(.3, .9, .3, 1) both;   /* winning tiles bounce in turn */
+
+  @keyframes ink {
+    0%   { stroke-dashoffset: 1; opacity: 0; }
+    10%  { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes pop {
+    0%   { scale: .5; opacity: 0; }
+    100% { scale: 1; opacity: 1; }
+  }
+  @keyframes win {
+    0%   { scale: 1; }
+    40%  { scale: 1.14; rotate: -3deg; }
+    100% { scale: 1; rotate: 0deg; }
+  }
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  *, *::before, *::after { box-sizing: inherit; }
+  html {
+    height: 100%;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+    -webkit-text-size-adjust: 100%;
+  }
+  /* Graph paper: the game is a pencil-and-paper classic */
+  body {
+    margin: 0;
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 20px 16px 28px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  #root { width: 100%; display: grid; justify-items: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

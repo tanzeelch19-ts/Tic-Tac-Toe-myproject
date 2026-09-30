@@ -1,0 +1,58 @@
+.game {
+  width: min(100%, 440px);
+  display: grid;
+  gap: 18px;
+}
+
+.game h1 {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 7vw, 2.2rem);
+  letter-spacing: -0.03em;
+}
+
+/* ---------- Status line ---------- */
+.status {
+  margin: 0;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+.status .chip { width: 1.5em; height: 1.5em; }
+
+/* ---------- Buttons ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: .8em 1.5em;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color .15s, transform .1s;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid var(--x); outline-offset: 3px; }
+
+.btn-primary { background: var(--ink); color: var(--paper); }
+
+@media (hover: hover) {
+  .btn:hover { background: var(--line); }
+  .btn-primary:hover { background: var(--ink); opacity: .88; }
+}
